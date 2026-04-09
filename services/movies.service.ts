@@ -7,8 +7,20 @@ export async function getTrendingMovies(): Promise<Movie[]> {
   return data.titles.map((item: any) => ({
     id: item.id,
     title: item.primaryTitle,
-    poster: item.primaryImage?.url || '/fallback.jpg',
+    poster: item.primaryImage?.url,
     year: item.startYear,
     genre: item.genres?.[0] || "Unknown",
   }));
+}
+
+export async function searchMovies(query: string): Promise<Movie[]> {
+  const data = await apiFetch<any>(`/search/titles?query=${query}`);
+
+  return data.titles?.map((item: any) => ({
+    id: item.id,
+    title: item.primaryTitle,
+    poster: item.primaryImage?.url,
+    year: item.startYear,
+    genre: item.genres?.[0] || "Unknown",
+  })) || [];
 }

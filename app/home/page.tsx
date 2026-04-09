@@ -1,15 +1,37 @@
+'use client'
+
+import MovieSection from "@/components/layout/MovieSection";
+import Navbar from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/sidebar";
 import PageTransition from "@/components/shared-components/page-transition";
-import Trending from "@/sections/trending";
+import { useTrendingMovies } from "@/hooks/useMovie";
+import { useSearchMovies } from "@/hooks/useSearchMovies";
+import { useSearch } from "@/providers/SearchContent";
 
 export default function HomePage() {
+  useSearchMovies();
+
+  const { results, query } = useSearch()
+  const { movies: trendingMovies, loading } = useTrendingMovies();
+
+  const moviesToShow = query ? results : trendingMovies;
+
   return (
     <PageTransition>
       <div className="flex">
         <Sidebar />
 
         <main className="flex-1 bg-black text-white p-10 overflow-hidden pt-20 md:pt-10">
-          <Trending />
+
+          <div className="sticky top-0 z-50">
+            <Navbar />
+          </div>
+
+          <MovieSection
+            title={query ? "Search Results" : "Trending"}
+            movies={moviesToShow}
+            loading={loading}
+          />
         </main>
       </div>
     </PageTransition>

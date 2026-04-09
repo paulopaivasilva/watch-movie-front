@@ -5,14 +5,19 @@ import Carousel from "@/components/shared-components/Carousel";
 import MovieCard from "@/components/shared-components/movie/MovieCard";
 import NotFound from '@/assets/images/not-image.png'
 
-interface TrendingProps {
+interface MovieSectionProps {
+  title: string;
   movies: any[];
-  loading: boolean;
+  loading?: boolean;
 }
 
-export default function Trending({ movies, loading }: TrendingProps) {
+export default function MovieSection({
+  title,
+  movies,
+  loading = false,
+}: MovieSectionProps) {
   return (
-    <Section title="Trending">
+    <Section title={title}>
       <Carousel>
         {loading
           ? [...Array(4)].map((_, i) => (
