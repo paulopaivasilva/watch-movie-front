@@ -1,16 +1,20 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getTrendingMovies } from "@/services/movies.service";
+import { getFilteredMovies } from "@/services/movies.service";
+import { useFilter } from "@/providers/FilterContext";
 
-export function useTrendingMovies() {
+export function useMovies() {
+  const { category, sort } = useFilter();
+
   const { data, isLoading } = useQuery({
-    queryKey: ["trending-movies"],
-    queryFn: getTrendingMovies,
+    queryKey: ["movies", category, sort],
+    queryFn: () => getFilteredMovies({ category, sort }),
     staleTime: 1000 * 60 * 10,
-    gcTime: 1000 * 60 * 30,
-    refetchOnWindowFocus: false
   });
 
-  return { movies: data || [], loading: isLoading };
+  return {
+    movies: data || [],
+    loading: isLoading,
+  };
 }

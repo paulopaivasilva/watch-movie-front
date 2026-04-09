@@ -15,10 +15,10 @@ interface SidebarContentProps {
 }
 
 const menuItems = [
-  { label: "Home", icon: HomeIcon },
-  { label: "Favourites", icon: FavouriteIcon },
-  { label: "Trending", icon: TrendingIcon },
-  { label: "Coming soon", icon: CalendarIcon },
+  { label: "Home", icon: HomeIcon, href: '/home' },
+  { label: "Favourites", icon: FavouriteIcon, href: '/favourites' },
+  { label: "Trending", icon: TrendingIcon, href: '/trending' },
+  { label: "Coming soon", icon: CalendarIcon, href: '/coming-soon' },
 ];
 
 const optionsSocial = [
@@ -28,7 +28,7 @@ const optionsSocial = [
 
 const optionsUser = [
   { label: "Settings", icon: SettingsIcon },
-  { label: "Logout", icon: LogoutIcon },
+  { label: "Logout", icon: LogoutIcon, href: '/' },
 ];
 
 export default function SidebarContent({ collapsed }: SidebarContentProps) {
@@ -43,6 +43,7 @@ export default function SidebarContent({ collapsed }: SidebarContentProps) {
             label={item.label}
             icon={item.icon}
             collapsed={collapsed}
+            onClick={() => router.push(item?.href || '#')}
           />
         ))}
       </div>
@@ -65,11 +66,7 @@ export default function SidebarContent({ collapsed }: SidebarContentProps) {
             label={item.label}
             icon={item.icon}
             collapsed={collapsed}
-            onClick={
-              item.label === 'Logout'
-              ? () => router.replace('/')
-              : undefined
-            }
+            onClick={() => router.push(item?.href || '#')}
           />
         ))}
       </div>

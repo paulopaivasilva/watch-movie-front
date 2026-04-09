@@ -3,10 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Search, Bell } from "lucide-react";
 import { useSearch } from "@/providers/SearchContent";
+import { useFilter } from "@/providers/FilterContext";
 
 export default function Navbar() {
-  const types = ["Movies", "Series", "Documentaries"];
+  const types = [
+    { label: "Movies", value: "MOVIE" },
+    { label: "Series", value: "TV_SERIES" },
+    { label: "Documentaries", value: "TV_SPECIAL" },
+  ];
 
+  const { category, setCategory } = useFilter();
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -46,12 +52,16 @@ export default function Navbar() {
       <div className="flex items-center justify-between">
 
         <div className="flex items-center gap-6 text-white text-sm">
-          {types.map((item, i) => (
+          {types.map((item) => (
             <span
-              key={i}
-              className="cursor-pointer hover:text-purple-400 transition"
+              key={item.value}
+              onClick={() => setCategory(item.value as any)}
+              className={`cursor-pointer transition ${category === item.value
+                  ? "text-purple-400"
+                  : "text-white/70 hover:text-white"
+                }`}
             >
-              {item}
+              {item.label}
             </span>
           ))}
         </div>

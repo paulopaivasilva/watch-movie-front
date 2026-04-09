@@ -4,7 +4,7 @@ import MovieSection from "@/components/layout/MovieSection";
 import Navbar from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/sidebar";
 import PageTransition from "@/components/shared-components/page-transition";
-import { useTrendingMovies } from "@/hooks/useMovie";
+import { useMovies } from "@/hooks/useMovie";
 import { useSearchMovies } from "@/hooks/useSearchMovies";
 import { useSearch } from "@/providers/SearchContent";
 
@@ -12,9 +12,10 @@ export default function HomePage() {
   useSearchMovies();
 
   const { results, query } = useSearch()
-  const { movies: trendingMovies, loading } = useTrendingMovies();
+  const { movies, loading } = useMovies();
 
-  const moviesToShow = query ? results : trendingMovies;
+  const isSearching = query.length > 0;
+  const moviesToShow = query ? results : movies;
 
   return (
     <PageTransition>
@@ -28,7 +29,7 @@ export default function HomePage() {
           </div>
 
           <MovieSection
-            title={query ? "Search Results" : "Trending"}
+            title={isSearching ? "Search Results" : "Trending"}
             movies={moviesToShow}
             loading={loading}
           />

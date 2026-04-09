@@ -5,4 +5,5 @@ export interface Movie {
   year?: number;
   genre?: string;
   rating?: number;
+  nextPageToken?: string;
 }

@@ -24,6 +24,7 @@ export default function Trending({ movies, loading }: TrendingProps) {
           : movies.map((movie) => (
               <MovieCard
                 key={movie.id}
+                id={movie.id}
                 title={movie.title}
                 image={movie.primaryImage?.url || movie.poster || NotFound}
                 year={String(movie.startYear || movie.year)}

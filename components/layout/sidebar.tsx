@@ -38,7 +38,7 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          "hidden md:flex flex-col bg-[#191817] text-white min-h-screen transition-all duration-300 py-10 px-4",
+          "hidden md:flex flex-col bg-[#191817] text-white h-screen transition-all duration-300 py-10 px-4",
           "shadow-[2px_0_90px_rgba(97,0,194,0.4)]",
           collapsed ? "w-20" : "w-64"
         )}
