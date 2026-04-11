@@ -2,27 +2,37 @@
 
 import AppLayout from "@/components/layout/AppLayout";
 import MovieGrid from "@/components/layout/MovieGrid";
+import Title from "@/components/layout/Title";
 import { useFavouriteMovies } from "@/hooks/useFavouritesMovies";
+import { useSearch } from "@/providers/SearchContent";
+import { useSearchMovies } from "@/hooks/useSearchMovies";
 
 export default function FavouritesPage() {
+  useSearchMovies();
+
   const { movies, loading, empty } = useFavouriteMovies();
+  const { query, results } = useSearch();
+
+  const isSearching = query.length > 0;
+
+  const moviesToShow = isSearching ? results : movies;
 
   return (
     <AppLayout>
-      <h1 className="text-2xl font-semibold mb-6">
-        Favourites
-      </h1>
+      <Title>
+        {isSearching ? "Search Results" : "Favourites"}
+      </Title>
 
-      {empty && (
+      {!isSearching && empty && (
         <div className="text-white/50">
           You have no favourite movies yet.
         </div>
       )}
 
-      {loading ? (
+      {loading && !isSearching ? (
         <div className="text-white/50">Loading...</div>
       ) : (
-        <MovieGrid movies={movies} />
+        <MovieGrid movies={moviesToShow} />
       )}
     </AppLayout>
   );

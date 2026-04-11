@@ -56,9 +56,9 @@ export default function Navbar() {
             <span
               key={item.value}
               onClick={() => setCategory(item.value as any)}
-              className={`cursor-pointer transition ${category === item.value
+              className={`cursor-pointer transition text-base font-medium ${category === item.value
                   ? "text-purple-400"
-                  : "text-white/70 hover:text-white"
+                  : "text-white"
                 }`}
             >
               {item.label}
@@ -100,7 +100,7 @@ export default function Navbar() {
               src="https://i.pravatar.cc/40"
               className="w-7 h-7 rounded-full"
             />
-            <span className="text-white text-sm">Igor</span>
+            <span className="text-base text-white font-medium">Igor</span>
           </div>
         </div>
       </div>

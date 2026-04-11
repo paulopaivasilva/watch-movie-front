@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Heart } from "lucide-react";
-import { useFavourites } from "@/hooks/useFavourites";
+import { useFavourites } from "@/providers/FavouritesProvider";
 
 interface MovieCardProps {
   id: string;

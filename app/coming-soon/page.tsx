@@ -6,6 +6,7 @@ import { useTrendingInfinite } from "@/hooks/useMovieInfinite";
 import { useSearch } from "@/providers/SearchContent";
 import { useFilter } from "@/providers/FilterContext";
 import { useSearchMovies } from "@/hooks/useSearchMovies";
+import Title from "@/components/layout/Title";
 
 export default function ComingSoonPage() {
   useSearchMovies();
@@ -34,9 +35,7 @@ export default function ComingSoonPage() {
 
   return (
     <AppLayout>
-      <h1 className="text-2xl font-semibold mb-6">
-        {isSearching ? "Search Results" : "Coming Soon"}
-      </h1>
+      <Title>{isSearching ? "Search Results" : "Coming Soon"}</Title>
 
       {isLoading && !isSearching ? (
         <div className="text-white/50">Loading...</div>

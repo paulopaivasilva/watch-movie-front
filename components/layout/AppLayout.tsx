@@ -16,12 +16,10 @@ export default function AppLayout({
 
         <main className="flex-1 bg-black text-white p-10 pt-20 md:pt-10">
 
-          {/* Navbar */}
           <div className="sticky top-0 z-50">
             <Navbar />
           </div>
 
-          {/* Conteúdo dinâmico */}
           {children}
 
         </main>

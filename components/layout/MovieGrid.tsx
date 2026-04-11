@@ -9,7 +9,7 @@ interface MovieGridProps {
 
 export default function MovieGrid({ movies }: MovieGridProps) {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-8">
+    <div className="grid grid-cols-[repeat(auto-fill,348px)] gap-8">
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}

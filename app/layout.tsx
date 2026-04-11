@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { SearchProvider } from "@/providers/SearchContent";
 import { FilterProvider } from "@/providers/FilterContext";
+import { FavouritesProvider } from "@/providers/FavouritesProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ export default function RootLayout({
           <AnimatePresence mode="wait">
             <SearchProvider>
               <FilterProvider>
-                <div>{children}</div>
+                <FavouritesProvider>
+                  <div>{children}</div>
+                </FavouritesProvider>
               </FilterProvider>
             </SearchProvider>
           </AnimatePresence>

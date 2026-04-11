@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import MovieSection from "@/components/layout/MovieSection";
 import Navbar from "@/components/layout/Navbar";

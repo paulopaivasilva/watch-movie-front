@@ -20,7 +20,6 @@ export function Sidebar() {
 
   return (
     <>
-      {/* MOBILE */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 p-4 bg-[#191817]/80 backdrop-blur-md">
         <Sheet>
           <SheetTrigger>

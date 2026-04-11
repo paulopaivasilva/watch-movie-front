@@ -1,8 +1,6 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
-import { useFavourites } from "./useFavourites";
+import { useFavourites } from "@/providers/FavouritesProvider";
 import { getMoviesByIds } from "@/services/movies.service";
+import { useQuery } from "@tanstack/react-query";
 
 export function useFavouriteMovies() {
   const { ids, loaded } = useFavourites();
@@ -10,7 +8,7 @@ export function useFavouriteMovies() {
   const { data, isLoading } = useQuery({
     queryKey: ["favourites", ids],
     queryFn: () => getMoviesByIds(ids),
-    enabled: loaded && ids.length > 0, // 🔥 CORRETO
+    enabled: loaded && ids.length > 0,
   });
 
   return {
