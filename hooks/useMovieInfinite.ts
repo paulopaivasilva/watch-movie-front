@@ -16,7 +16,7 @@ export function useTrendingInfinite({
     queryKey: ["trending-infinite", category, sort, order],
 
     queryFn: ({ pageParam }) =>
-      getInfiniteMovies(pageParam, { category, sort }),
+      getInfiniteMovies(pageParam, { category, sort, order }),
 
     initialPageParam: undefined,
 

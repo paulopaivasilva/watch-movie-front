@@ -7,12 +7,16 @@ import { useSearch } from "@/providers/SearchContent";
 import { useFilter } from "@/providers/FilterContext";
 import { useSearchMovies } from "@/hooks/useSearchMovies";
 import Title from "@/components/layout/Title";
+import MovieModal from "@/components/shared-components/movie/MovieModal";
+import { useState } from "react";
 
 export default function ComingSoonPage() {
   useSearchMovies();
 
   const { query, results } = useSearch();
   const { category } = useFilter();
+
+  const [selectedMovie, setSelectedMovie] = useState<string | null>(null);
 
   const isSearching = query.length > 0;
 
@@ -25,7 +29,7 @@ export default function ComingSoonPage() {
   } = useTrendingInfinite({
     category,
     sort: "upcoming",
-    order: "asc"
+    order: "desc"
   });
 
   const infiniteMovies =
@@ -38,9 +42,11 @@ export default function ComingSoonPage() {
       <Title>{isSearching ? "Search Results" : "Coming Soon"}</Title>
 
       {isLoading && !isSearching ? (
-        <div className="text-white/50">Loading...</div>
+        <div className="text-white">Loading...</div>
       ) : (
-        <MovieGrid movies={moviesToShow} />
+        <MovieGrid
+          movies={moviesToShow}
+          onSelect={(id) => setSelectedMovie(id)} />
       )}
 
       {!isSearching && hasNextPage && (
@@ -52,6 +58,13 @@ export default function ComingSoonPage() {
             {isFetchingNextPage ? "Loading..." : "Load More"}
           </button>
         </div>
+      )}
+
+      {selectedMovie && (
+        <MovieModal
+          movieId={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
       )}
     </AppLayout>
   );

@@ -13,7 +13,6 @@ export default function Navbar() {
   ];
 
   const { category, setCategory } = useFilter();
-  const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   const searchRef = useRef<HTMLDivElement>(null);
@@ -30,24 +29,9 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div
-      className={`
-        w-full py-4 mb-10 transition-all duration-300
-        ${scrolled
-          ? "bg-black/90 backdrop-blur-md shadow-lg"
-          : "bg-linear-to-b from-black/80 to-transparent"
-        }
-      `}
+      className={"w-full md:px-10 py-5 md:py-0 transition-all duration-300 px-5"}
     >
       <div className="flex items-center justify-between">
 
@@ -72,7 +56,7 @@ export default function Navbar() {
 
             <Search
               onClick={() => setSearchOpen(true)}
-              className="w-5 h-5 text-white/70 cursor-pointer hover:text-white transition"
+              className="w-5 h-5 text-white cursor-pointer transition"
             />
 
             <div
@@ -93,9 +77,9 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Bell className="w-5 h-5 text-white/70 cursor-pointer hover:text-white transition" />
+          <Bell className="w-5 h-5 text-white cursor-pointer hover:text-white transition" />
 
-          <div className="flex items-center gap-2 cursor-pointer">
+          <div className="md:flex items-center gap-2 cursor-pointer hidden">
             <img
               src="https://i.pravatar.cc/40"
               className="w-7 h-7 rounded-full"

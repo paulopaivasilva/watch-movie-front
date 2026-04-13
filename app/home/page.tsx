@@ -1,40 +1,39 @@
-"use client"
+"use client";
 
+import AppLayout from "@/components/layout/AppLayout";
 import MovieSection from "@/components/layout/MovieSection";
-import Navbar from "@/components/layout/Navbar";
-import { Sidebar } from "@/components/layout/sidebar";
-import PageTransition from "@/components/shared-components/page-transition";
 import { useMovies } from "@/hooks/useMovie";
 import { useSearchMovies } from "@/hooks/useSearchMovies";
 import { useSearch } from "@/providers/SearchContent";
+import { useState } from "react";
+import MovieModal from "@/components/shared-components/movie/MovieModal";
 
 export default function HomePage() {
   useSearchMovies();
 
-  const { results, query } = useSearch()
+  const { results, query } = useSearch();
   const { movies, loading } = useMovies();
 
+  const [selectedMovie, setSelectedMovie] = useState<string | null>(null);
+
   const isSearching = query.length > 0;
-  const moviesToShow = query ? results : movies;
+  const moviesToShow = isSearching ? results : movies;
 
   return (
-    <PageTransition>
-      <div className="flex">
-        <Sidebar />
+    <AppLayout>
+      <MovieSection
+        title={isSearching ? "Search Results" : "Trending"}
+        movies={moviesToShow}
+        loading={loading}
+        onSelect={(id) => setSelectedMovie(id)}
+      />
 
-        <main className="flex-1 bg-black text-white p-10 overflow-hidden pt-20 md:pt-10">
-
-          <div className="sticky top-0 z-50">
-            <Navbar />
-          </div>
-
-          <MovieSection
-            title={isSearching ? "Search Results" : "Trending"}
-            movies={moviesToShow}
-            loading={loading}
-          />
-        </main>
-      </div>
-    </PageTransition>
+      {selectedMovie && (
+        <MovieModal
+          movieId={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
+      )}
+    </AppLayout>
   );
 }

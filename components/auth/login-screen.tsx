@@ -20,7 +20,7 @@ export function LoginScreen() {
       <div className="absolute inset-0 bg-linear-to-br from-[#191817]/90 via-[#2a0a4a]/80 to-[#6100C2]/80" />
 
       <div className="relative z-10 flex h-full items-center justify-center text-white">
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center">
           <Logo />
 
           <p className="text-[18px] mt-5 mb-10">

@@ -3,18 +3,20 @@
 import Section from "@/components/shared-components/Section";
 import Carousel from "@/components/shared-components/Carousel";
 import MovieCard from "@/components/shared-components/movie/MovieCard";
-import NotFound from '@/assets/images/not-image.png'
+import NotFound from '@/assets/images/not-image.jpg'
 
 interface MovieSectionProps {
   title: string;
   movies: any[];
   loading?: boolean;
+  onSelect?: (id: string) => void;
 }
 
 export default function MovieSection({
   title,
   movies,
   loading = false,
+  onSelect
 }: MovieSectionProps) {
   return (
     <Section title={title}>
@@ -34,6 +36,7 @@ export default function MovieSection({
                 image={movie.primaryImage?.url || movie.poster || NotFound}
                 year={String(movie.startYear || movie.year)}
                 genre={movie.genre || ""}
+                onClick={() => onSelect?.(movie.id)}
               />
             ))}
       </Carousel>

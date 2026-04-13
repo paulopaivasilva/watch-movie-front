@@ -6,6 +6,8 @@ import Title from "@/components/layout/Title";
 import { useFavouriteMovies } from "@/hooks/useFavouritesMovies";
 import { useSearch } from "@/providers/SearchContent";
 import { useSearchMovies } from "@/hooks/useSearchMovies";
+import { useState } from "react";
+import MovieModal from "@/components/shared-components/movie/MovieModal";
 
 export default function FavouritesPage() {
   useSearchMovies();
@@ -13,8 +15,9 @@ export default function FavouritesPage() {
   const { movies, loading, empty } = useFavouriteMovies();
   const { query, results } = useSearch();
 
-  const isSearching = query.length > 0;
+  const [selectedMovie, setSelectedMovie] = useState<string | null>(null);
 
+  const isSearching = query.length > 0;
   const moviesToShow = isSearching ? results : movies;
 
   return (
@@ -24,15 +27,25 @@ export default function FavouritesPage() {
       </Title>
 
       {!isSearching && empty && (
-        <div className="text-white/50">
+        <div className="text-white">
           You have no favourite movies yet.
         </div>
       )}
 
       {loading && !isSearching ? (
-        <div className="text-white/50">Loading...</div>
+        <div className="text-white">Loading...</div>
       ) : (
-        <MovieGrid movies={moviesToShow} />
+        <MovieGrid
+          movies={moviesToShow}
+          onSelect={(id) => setSelectedMovie(id)}
+        />
+      )}
+
+      {selectedMovie && (
+        <MovieModal
+          movieId={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
       )}
     </AppLayout>
   );

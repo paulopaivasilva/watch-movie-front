@@ -6,12 +6,16 @@ import { useTrendingInfinite } from "@/hooks/useMovieInfinite";
 import { useSearch } from "@/providers/SearchContent";
 import { useFilter } from "@/providers/FilterContext";
 import { useSearchMovies } from "@/hooks/useSearchMovies";
+import { useState } from "react";
+import MovieModal from "@/components/shared-components/movie/MovieModal";
 
 export default function TrendingPage() {
   useSearchMovies();
 
   const { query, results } = useSearch();
   const { category, sort } = useFilter();
+
+  const [selectedMovie, setSelectedMovie] = useState<string | null>(null);
 
   const isSearching = query.length > 0;
 
@@ -21,7 +25,7 @@ export default function TrendingPage() {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useTrendingInfinite({ category, sort });
+  } = useTrendingInfinite({ category, sort, order: "asc" });
 
   const infiniteMovies =
     data?.pages?.flatMap((page) => page?.movies ?? []) ?? [];
@@ -31,13 +35,15 @@ export default function TrendingPage() {
   return (
     <AppLayout>
       <h1 className="text-2xl font-semibold mb-6">
-        {isSearching ? "Search Results" : "Trending"}
+        {isSearching ? "Search Results" : "Trending at this moment"}
       </h1>
 
       {isLoading && !isSearching ? (
-        <div className="text-white/50">Loading...</div>
+        <div className="text-white">Loading...</div>
       ) : (
-        <MovieGrid movies={moviesToShow} />
+        <MovieGrid
+          movies={moviesToShow}
+          onSelect={(id) => setSelectedMovie(id)} />
       )}
 
       {!isSearching && hasNextPage && (
@@ -49,6 +55,12 @@ export default function TrendingPage() {
             {isFetchingNextPage ? "Loading..." : "Load More"}
           </button>
         </div>
+      )}
+      {selectedMovie && (
+        <MovieModal
+          movieId={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
       )}
     </AppLayout>
   );

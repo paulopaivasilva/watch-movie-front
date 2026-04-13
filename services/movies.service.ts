@@ -104,3 +104,18 @@ export async function getMoviesByIds(ids: string[]) {
     genre: item.genres?.[0] || "Unknown",
   }));
 }
+
+export async function getMovieById(id: string) {
+  const data = await apiFetch<any>(`/titles/${id}`);
+
+  return {
+    id: data.id,
+    title: data.primaryTitle,
+    image: data.primaryImage?.url,
+    year: data.startYear,
+    runtime: data.runtimeSeconds,
+    genres: data.genres || [],
+    rating: data.rating?.aggregateRating,
+    plot: data.plot,
+  };
+}
