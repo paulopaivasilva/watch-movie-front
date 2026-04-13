@@ -5,11 +5,16 @@ import { Sidebar } from "./Sidebar";
 import PageTransition from "@/components/shared-components/page-transition";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ErrorState } from "../shared-components/ErrorState";
 
 export default function AppLayout({
   children,
+  isError,
+  onRetry,
 }: {
   children: React.ReactNode;
+  isError?: boolean;
+  onRetry?: () => void;
 }) {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -28,7 +33,11 @@ export default function AppLayout({
             collapsed ? "md:ml-20" : "md:ml-64"
           )}
         >
-          {children}
+          {isError ? (
+            <ErrorState onRetry={onRetry!} />
+          ) : (
+            children
+          )}
         </main>
       </div>
     </PageTransition>

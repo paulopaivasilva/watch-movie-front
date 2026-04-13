@@ -5,15 +5,20 @@ import { useQuery } from "@tanstack/react-query";
 export function useFavouriteMovies() {
   const { ids, loaded } = useFavourites();
 
-  const { data, isLoading } = useQuery({
+  const query = useQuery({
     queryKey: ["favourites", ids],
     queryFn: () => getMoviesByIds(ids),
     enabled: loaded && ids.length > 0,
+    retry: 2,
   });
 
   return {
-    movies: data || [],
-    loading: isLoading,
+    movies: query.data || [],
+    loading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+
     empty: loaded && ids.length === 0,
   };
 }

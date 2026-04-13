@@ -12,7 +12,7 @@ export function useTrendingInfinite({
   sort: string;
   order?: string;
 }) {
-  return useInfiniteQuery({
+  const query = useInfiniteQuery({
     queryKey: ["trending-infinite", category, sort, order],
 
     queryFn: ({ pageParam }) =>
@@ -26,5 +26,18 @@ export function useTrendingInfinite({
 
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 30,
+
+    retry: 2,
   });
+
+  return {
+    ...query,
+
+    movies:
+      query.data?.pages?.flatMap((page) => page?.movies ?? []) ?? [],
+
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+  };
 }
